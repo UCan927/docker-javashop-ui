@@ -332,5 +332,9 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && yarn --version
 # -------------End Install Node.js---------------
 
+# -------------Begin Add Other Program-----------
+RUN apk add bash
+RUN apk add gcc g++ make libffi-dev openssl-dev libtool
+# -------------End Add Other Program-----------
 
 CMD ["nginx", "-g", "daemon off;"]
