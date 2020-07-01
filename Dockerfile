@@ -237,7 +237,7 @@ RUN set -ex; \
 
 
 # -------------Begin Install Node.js---------------
-ENV NODE_VERSION 14.4.0
+ENV NODE_VERSION 8.17.0
 
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
@@ -249,7 +249,7 @@ RUN addgroup -g 1000 node \
       && case "${alpineArch##*-}" in \
         x86_64) \
           ARCH='x64' \
-          CHECKSUM="c33037cadcd6caab8593b1b3f8befad6137b621378462fad24b4100eba879e4c" \
+          CHECKSUM="bd085bf3bf9d442500f78943e7f04631c7eaa888a3bf42c1f40bea74c3d1d6f8" \
           ;; \
         *) ;; \
       esac \
@@ -304,12 +304,9 @@ RUN addgroup -g 1000 node \
     && rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt; \
   fi \
   && rm -f "node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz" \
-  && apk del .build-deps \
-  # smoke tests
-  && node --version \
-  && npm --version
+  && apk del .build-deps
 
-ENV YARN_VERSION 1.22.4
+ENV YARN_VERSION 1.21.1
 
 RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && for key in \
@@ -327,10 +324,9 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
-  && apk del .build-deps-yarn \
-  # smoke test
-  && yarn --version
+  && apk del .build-deps-yarn
 # -------------End Install Node.js---------------
+
 
 # -------------Begin Add Other Program-----------
 RUN apk add bash
