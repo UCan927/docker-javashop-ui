@@ -110,7 +110,7 @@ RUN set -x \
 COPY docker-entrypoint.sh /
 COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
 COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
-chmod +x /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 80
