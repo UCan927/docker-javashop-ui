@@ -334,3 +334,5 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
 RUN apk add bash
 RUN apk add gcc g++ make libffi-dev openssl-dev libtool
 # -------------End Add Other Program-----------
+
+ENTRYPOINT ["bash"]
