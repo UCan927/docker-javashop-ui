@@ -1,5 +1,7 @@
 FROM alpine:3.11
 
+# -------------Begin Install Nginx---------------------
+
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 ENV NGINX_VERSION 1.18.0
@@ -113,11 +115,11 @@ COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
 RUN chmod +x /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
 RUN chmod +x /docker-entrypoint.d/20-envsubst-on-templates.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-EXPOSE 80
 
 STOPSIGNAL SIGTERM
+
+# -------------End Install Nginx---------------------
+
 
 # -------------Begin Install Python2-----------------
 
@@ -332,5 +334,3 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
 RUN apk add bash
 RUN apk add gcc g++ make libffi-dev openssl-dev libtool
 # -------------End Add Other Program-----------
-
-CMD ["nginx", "-g", "daemon off;"]
