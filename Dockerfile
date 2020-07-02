@@ -1,5 +1,6 @@
 FROM alpine:3.11
 
+
 # -------------Begin Install Nginx---------------------
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
@@ -108,13 +109,6 @@ RUN set -x \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
 # create a docker-entrypoint.d directory
     && mkdir /docker-entrypoint.d
-
-COPY docker-entrypoint.sh /
-COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
-COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
-RUN chmod +x /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
-RUN chmod +x /docker-entrypoint.d/20-envsubst-on-templates.sh
 
 STOPSIGNAL SIGTERM
 
@@ -331,8 +325,9 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
 
 
 # -------------Begin Add Other Program-----------
-RUN apk add bash
-RUN apk add gcc g++ make libffi-dev openssl-dev libtool
+RUN apk add bash gcc g++ make libffi-dev openssl-dev libtool
 # -------------End Add Other Program-----------
 
-ENTRYPOINT ["bash"]
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["./docker-entrypoint.sh"]
